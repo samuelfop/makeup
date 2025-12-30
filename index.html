@@ -1,8 +1,10 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Makeup Stars Cape Town - Empowering the next generation of artistry through professional makeup education.">
     <title>Makeup Stars Cape Town</title>
     
     <!-- Tailwind CSS (Styling) -->
@@ -46,6 +48,7 @@
     
     <style>
         body { margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
     </style>
 </head>
 <body>
@@ -130,14 +133,14 @@
 
         // --- COMPONENTS ---
 
-        const Navigation = ({ activePage, setActivePage, isMenuOpen, setIsMenuOpen }) => (
+        const Navigation = ({ activePage, handlePageChange, isMenuOpen, setIsMenuOpen }) => (
             <nav className="fixed top-0 w-full bg-white/95 backdrop-blur-sm z-50 border-b border-black/10">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex justify-between items-center h-20">
                         {/* Logo */}
                         <div 
                             className="flex-shrink-0 flex items-center gap-2 cursor-pointer" 
-                            onClick={() => setActivePage('home')}
+                            onClick={() => handlePageChange('home')}
                         >
                             <Icons.Star className="h-6 w-6 text-[#D1A6A0] fill-current" fill="#D1A6A0" />
                             <span className="text-2xl font-bold tracking-tight uppercase" style={{ fontFamily: FONTS.heading }}>
@@ -150,7 +153,7 @@
                             {['Home', 'About', 'Courses', 'Gallery', 'Contact'].map((item) => (
                                 <button
                                     key={item}
-                                    onClick={() => setActivePage(item.toLowerCase())}
+                                    onClick={() => handlePageChange(item.toLowerCase())}
                                     className={`text-sm font-semibold uppercase tracking-widest transition-colors duration-300 ${
                                         activePage === item.toLowerCase() ? 'text-[#D1A6A0]' : 'text-black hover:text-[#D1A6A0]'
                                     }`}
@@ -160,7 +163,7 @@
                                 </button>
                             ))}
                             <button 
-                                onClick={() => setActivePage('contact')}
+                                onClick={() => handlePageChange('contact')}
                                 className="px-6 py-2 bg-black text-white text-xs font-bold uppercase tracking-widest hover:bg-[#D1A6A0] transition-colors duration-300"
                             >
                                 Enroll Now
@@ -183,10 +186,7 @@
                             {['Home', 'About', 'Courses', 'Gallery', 'Contact'].map((item) => (
                                 <button
                                     key={item}
-                                    onClick={() => {
-                                        setActivePage(item.toLowerCase());
-                                        setIsMenuOpen(false);
-                                    }}
+                                    onClick={() => handlePageChange(item.toLowerCase())}
                                     className={`block w-full text-left px-3 py-2 text-base font-medium uppercase tracking-wider ${
                                         activePage === item.toLowerCase() ? 'text-[#D1A6A0]' : 'text-black hover:bg-gray-50'
                                     }`}
@@ -201,10 +201,10 @@
             </nav>
         );
 
-        const Footer = ({ setActivePage }) => (
+        const Footer = ({ handlePageChange }) => (
             <footer className="bg-black text-white border-t border-white/10 py-12 mt-auto">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-6">
-                    <div className="flex items-center gap-2 cursor-pointer" onClick={() => setActivePage('home')}>
+                    <div className="flex items-center gap-2 cursor-pointer" onClick={() => handlePageChange('home')}>
                         <Icons.Star className="h-5 w-5 text-[#D1A6A0] fill-current" fill="#D1A6A0" />
                         <span className="font-bold uppercase tracking-widest" style={{ fontFamily: FONTS.heading }}>MakeupStars</span>
                     </div>
@@ -220,9 +220,10 @@
 
         // --- PAGES ---
 
-        const HomePage = ({ setActivePage }) => (
+        const HomePage = ({ handlePageChange }) => (
             <div className="animate-fade-in">
-                <section className="relative pt-20 pb-16 md:pt-32 md:pb-24 overflow-hidden min-h-[80vh] flex items-center">
+                {/* HERO SECTION */}
+                <section className="relative pt-20 pb-16 md:pt-32 md:pb-24 overflow-hidden min-h-[85vh] flex items-center">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
                         <div className="text-center max-w-3xl mx-auto">
                             <p className="text-[#D1A6A0] font-bold tracking-[0.2em] uppercase mb-4" style={{ fontFamily: FONTS.heading }}>
@@ -236,13 +237,13 @@
                             </p>
                             <div className="flex flex-col sm:flex-row gap-4 justify-center">
                                 <button 
-                                    onClick={() => setActivePage('courses')}
+                                    onClick={() => handlePageChange('courses')}
                                     className="px-8 py-4 bg-black text-white font-bold uppercase tracking-widest hover:bg-[#D1A6A0] hover:scale-105 transition-all duration-300 shadow-lg"
                                 >
                                     View Courses
                                 </button>
                                 <button 
-                                    onClick={() => setActivePage('about')}
+                                    onClick={() => handlePageChange('about')}
                                     className="px-8 py-4 border-2 border-black text-black font-bold uppercase tracking-widest hover:bg-black hover:text-white transition-all duration-300"
                                 >
                                     Our Mission
@@ -254,6 +255,100 @@
                     {/* Decorative Background Elements */}
                     <div className="absolute top-1/2 left-0 -translate-y-1/2 w-64 h-64 bg-[#D1A6A0] rounded-full mix-blend-multiply filter blur-3xl opacity-20 -z-10 animate-blob"></div>
                     <div className="absolute top-1/2 right-0 -translate-y-1/2 w-64 h-64 bg-gray-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20 -z-10 animate-blob animation-delay-2000"></div>
+                </section>
+
+                {/* FEATURES SECTION (NEW) */}
+                <section className="py-24 bg-white relative z-10">
+                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+                            <div className="text-center p-6 border border-transparent hover:border-black/5 transition-all duration-300 rounded-lg group cursor-default">
+                                <div className="w-16 h-16 bg-[#D1A6A0]/10 rounded-full flex items-center justify-center mx-auto mb-6 text-[#D1A6A0] group-hover:bg-[#D1A6A0] group-hover:text-white transition-colors">
+                                    <Icons.Star size={32} fill="currentColor" />
+                                </div>
+                                <h3 className="text-xl font-bold mb-4" style={{ fontFamily: FONTS.heading }}>Professional Training</h3>
+                                <p className="text-gray-600 leading-relaxed">
+                                    Master everything from foundational hygiene and color theory to avant-garde editorial techniques with our industry-standard curriculum.
+                                </p>
+                            </div>
+                            <div className="text-center p-6 border border-transparent hover:border-black/5 transition-all duration-300 rounded-lg group cursor-default">
+                                <div className="w-16 h-16 bg-[#D1A6A0]/10 rounded-full flex items-center justify-center mx-auto mb-6 text-[#D1A6A0] group-hover:bg-[#D1A6A0] group-hover:text-white transition-colors">
+                                    <Icons.Camera size={32} />
+                                </div>
+                                <h3 className="text-xl font-bold mb-4" style={{ fontFamily: FONTS.heading }}>Real Experience</h3>
+                                <p className="text-gray-600 leading-relaxed">
+                                    Don't just learn in a classroom. Join live street activations and pop-up events to build a real portfolio while you study.
+                                </p>
+                            </div>
+                            <div className="text-center p-6 border border-transparent hover:border-black/5 transition-all duration-300 rounded-lg group cursor-default">
+                                <div className="w-16 h-16 bg-[#D1A6A0]/10 rounded-full flex items-center justify-center mx-auto mb-6 text-[#D1A6A0] group-hover:bg-[#D1A6A0] group-hover:text-white transition-colors">
+                                    <Icons.Heart size={32} fill="currentColor" />
+                                </div>
+                                <h3 className="text-xl font-bold mb-4" style={{ fontFamily: FONTS.heading }}>Supportive Community</h3>
+                                <p className="text-gray-600 leading-relaxed">
+                                    We cultivate a culture of inclusivity and collaboration where your individuality is celebrated and your creativity can thrive.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                {/* VISION SPLIT SECTION (NEW) */}
+                <section className="py-20 bg-[#fff5f5]">
+                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                            <div className="order-2 lg:order-1">
+                                <p className="text-[#D1A6A0] font-bold tracking-widest uppercase mb-2">The Vision</p>
+                                <h2 className="text-4xl font-bold mb-6" style={{ fontFamily: FONTS.heading }}>Shaping Future <span className="italic font-serif font-normal text-[#D1A6A0]">Icons</span></h2>
+                                <p className="text-gray-700 mb-6 text-lg leading-relaxed">
+                                    We are more than just a school; we are a hub for empowering young artists. Our unique approach combines professional mentorship with the freedom to experiment, ensuring you leave with both skills and confidence.
+                                </p>
+                                <ul className="space-y-4 mb-8">
+                                    <li className="flex items-center gap-3">
+                                        <div className="w-2 h-2 bg-black rounded-full"></div>
+                                        <span>Industry-recognized certification</span>
+                                    </li>
+                                    <li className="flex items-center gap-3">
+                                        <div className="w-2 h-2 bg-black rounded-full"></div>
+                                        <span>Portfolio development & live models</span>
+                                    </li>
+                                    <li className="flex items-center gap-3">
+                                        <div className="w-2 h-2 bg-black rounded-full"></div>
+                                        <span>Access to masterclasses & networking</span>
+                                    </li>
+                                </ul>
+                                <button 
+                                    onClick={() => handlePageChange('about')}
+                                    className="text-black font-bold uppercase tracking-widest border-b-2 border-black pb-1 hover:text-[#D1A6A0] hover:border-[#D1A6A0] transition-colors"
+                                >
+                                    Read Our Full Mission
+                                </button>
+                            </div>
+                            <div className="order-1 lg:order-2 relative">
+                                <div className="absolute inset-0 border-2 border-black translate-x-4 translate-y-4"></div>
+                                <img 
+                                    src="https://images.unsplash.com/photo-1512496015851-a90fb38ba796?auto=format&fit=crop&q=80&w=800" 
+                                    alt="Makeup application" 
+                                    className="relative z-10 w-full h-auto object-cover grayscale hover:grayscale-0 transition-all duration-700 aspect-[4/5]"
+                                />
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                {/* CTA BANNER (NEW) */}
+                <section className="py-24 bg-black text-white text-center px-4">
+                    <div className="max-w-4xl mx-auto">
+                        <h2 className="text-3xl md:text-5xl font-bold mb-6" style={{ fontFamily: FONTS.heading }}>Start Your Career in Beauty</h2>
+                        <p className="text-gray-400 max-w-2xl mx-auto mb-10 text-lg">
+                            Spaces for our next intake are filling up. Secure your spot today and join the Makeup Stars family.
+                        </p>
+                        <button 
+                            onClick={() => handlePageChange('contact')}
+                            className="px-10 py-4 bg-white text-black font-bold uppercase tracking-widest hover:bg-[#D1A6A0] hover:text-white transition-all duration-300"
+                        >
+                            Enroll Now
+                        </button>
+                    </div>
                 </section>
             </div>
         );
@@ -299,7 +394,7 @@
             </div>
         );
 
-        const CoursesPage = ({ setActivePage }) => (
+        const CoursesPage = ({ handlePageChange }) => (
             <div className="animate-fade-in pt-24 pb-20 bg-white">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="text-center mb-16">
@@ -320,7 +415,7 @@
                                 <h3 className="text-2xl font-bold mb-4 group-hover:text-[#D1A6A0] transition-colors" style={{ fontFamily: FONTS.heading }}>{course.title}</h3>
                                 <p className="text-gray-600 mb-8 flex-grow">{course.description}</p>
                                 <button 
-                                    onClick={() => setActivePage('contact')}
+                                    onClick={() => handlePageChange('contact')}
                                     className="inline-flex items-center text-black font-bold uppercase tracking-widest text-sm group-hover:translate-x-2 transition-transform"
                                 >
                                     Enroll Now <Icons.ChevronRight size={16} className="ml-2 text-[#D1A6A0]" />
@@ -334,7 +429,7 @@
                         <p className="text-gray-600 mb-8 max-w-2xl mx-auto">
                             Students rotate through live demonstrations, practical workshops, and real-world activations.
                         </p>
-                        <button onClick={() => setActivePage('gallery')} className="underline text-black hover:text-[#D1A6A0] font-bold uppercase tracking-widest">
+                        <button onClick={() => handlePageChange('gallery')} className="underline text-black hover:text-[#D1A6A0] font-bold uppercase tracking-widest">
                             See Student Work
                         </button>
                     </div>
@@ -456,18 +551,53 @@
         // --- MAIN APP ---
 
         const App = () => {
-            const [activePage, setActivePage] = useState('home');
+            // Helper to get hash without the #
+            const getHash = () => window.location.hash.replace('#', '').toLowerCase();
+            const validPages = ['home', 'about', 'courses', 'gallery', 'contact'];
+            
+            // State initialization
+            const [activePage, setActivePage] = useState(() => {
+                const hash = getHash();
+                return validPages.includes(hash) ? hash : 'home';
+            });
             const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+            // Handle URL hash changes (Browser Back/Forward buttons)
+            useEffect(() => {
+                const onHashChange = () => {
+                    const hash = getHash();
+                    if (validPages.includes(hash)) {
+                        setActivePage(hash);
+                        window.scrollTo(0, 0);
+                    }
+                };
+
+                // Listen for hash changes
+                window.addEventListener('hashchange', onHashChange);
+                
+                // Set initial hash if empty
+                if (!window.location.hash) {
+                    window.location.hash = 'home';
+                }
+
+                return () => window.removeEventListener('hashchange', onHashChange);
+            }, []);
+
+            // Handle manual page navigation (Menu clicks)
+            const handlePageChange = (page) => {
+                window.location.hash = page; // This triggers the useEffect above
+                setIsMenuOpen(false);
+            };
 
             // Simple Router based on State
             const renderPage = () => {
                 switch(activePage) {
-                    case 'home': return <HomePage setActivePage={setActivePage} />;
+                    case 'home': return <HomePage handlePageChange={handlePageChange} />;
                     case 'about': return <AboutPage />;
-                    case 'courses': return <CoursesPage setActivePage={setActivePage} />;
+                    case 'courses': return <CoursesPage handlePageChange={handlePageChange} />;
                     case 'gallery': return <GalleryPage />;
                     case 'contact': return <ContactPage />;
-                    default: return <HomePage setActivePage={setActivePage} />;
+                    default: return <HomePage handlePageChange={handlePageChange} />;
                 }
             };
 
@@ -475,7 +605,7 @@
                 <div className="min-h-screen bg-white text-black selection:bg-[#D1A6A0] selection:text-white flex flex-col" style={{ fontFamily: FONTS.body }}>
                     <Navigation 
                         activePage={activePage} 
-                        setActivePage={setActivePage} 
+                        handlePageChange={handlePageChange} 
                         isMenuOpen={isMenuOpen} 
                         setIsMenuOpen={setIsMenuOpen} 
                     />
@@ -485,7 +615,7 @@
                         {renderPage()}
                     </main>
 
-                    <Footer setActivePage={setActivePage} />
+                    <Footer handlePageChange={handlePageChange} />
                 </div>
             );
         };
